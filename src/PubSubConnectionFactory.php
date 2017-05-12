@@ -88,7 +88,8 @@ class PubSubConnectionFactory
         $conf->set('offset.store.method', 'broker');
         $conf->setDefaultTopicConf($topicConf);
 
-        $consumer = $this->container->make('pubsub.kafka.consumer', ['conf' => $conf]);
+        $consumerClass = $this->container->make('pubsub.kafka.consumer.class');
+        $consumer = new $consumerClass($conf);
 
         return new KafkaPubSubAdapter($producer, $consumer);
     }
